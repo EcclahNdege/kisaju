@@ -16,6 +16,12 @@ class User(AbstractUser):
     )
     phone = models.CharField(max_length=20, blank=True)
 
+    farm = models.ForeignKey(
+        'farms.Farm', null=True, blank=True,
+        on_delete=models.PROTECT, related_name='staff',
+        help_text='Leave empty for Owner and Accountant (all farms)',
+    )
+
     def save(self, *args, **kwargs):
         if self.is_superuser:
             self.role = self.Role.OWNER
