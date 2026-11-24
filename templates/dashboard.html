@@ -1,5 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>Dashboard</h3>
-<p>Welcome, {{ user.username }}. Your role is {{ user.get_role_display }}.</p>
+<h3 class="mb-3">Dashboard</h3>
+
+{% for farm in farms %}
+<div class="card mb-3">
+  <div class="card-header">
+    {{ farm.name }} <span class="text-muted">({{ farm.get_farm_type_display }})</span>
+  </div>
+  <div class="card-body">
+    {% for house in farm.houses.all %}
+      <h6>{{ house.name }} <small class="text-muted">capacity {{ house.capacity }}</small></h6>
+      <table class="table table-sm mb-3">
+        <thead>
+          <tr><th>Flock</th><th>Breed</th><th>Started with</th><th>Arrived</th><th>Status</th></tr>
+        </thead>
+        {% for flock in house.flocks.all %}
+        <tr>
+          <td>{{ flock.code }}</td>
+          <td>{{ flock.breed }}</td>
+          <td>{{ flock.initial_quantity }}</td>
+          <td>{{ flock.arrival_date }}</td>
+          <td>{{ flock.get_status_display }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-muted">No flocks in this house.</td></tr>
+        {% endfor %}
+      </table>
+    {% empty %}
+      <p class="text-muted mb-0">No houses yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% empty %}
+<p class="text-muted">No farms are assigned to you. Ask the Owner.</p>
+{% endfor %}
 {% endblock %}
