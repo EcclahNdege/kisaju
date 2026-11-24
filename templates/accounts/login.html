@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5 col-lg-4">
+    <div class="card p-4">
+      <h4 class="mb-3">Kisaju Poultry System</h4>
+      <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+          <div class="alert alert-danger">Wrong username or password.</div>
+        {% endif %}
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input name="username" class="form-control" autofocus required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input name="password" type="password" class="form-control" required>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button class="btn btn-success w-100">Log in</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
