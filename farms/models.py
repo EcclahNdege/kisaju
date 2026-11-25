@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.db.models import Sum
 
 class Farm(models.Model):
     class FarmType(models.TextChoices):
@@ -53,3 +53,18 @@ class Flock(models.Model):
 
     def __str__(self):
         return f'{self.code} ({self.house})'
+
+    @property
+    def total_losses(self):
+        totals = self.daily_logs.aggregate(d=Sum('deaths'), c=Sum('culls'))
+        return (totals['d'] or 0) + (totals['c'] or 0)
+
+    @property
+    def live_birds(self):
+        return self.initial_quantity - self.total_losses
+
+    @property
+    def mortality_rate(self):
+        if not self.initial_quantity:
+            return 0
+        return round(self.total_losses / self.initial_quantity * 100, 2)
