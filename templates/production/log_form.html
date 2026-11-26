@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="mb-3">Add daily log</h3>
+<div class="card p-4" style="max-width: 600px">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button class="btn btn-success mt-3">Save</button>
+    <a class="btn btn-link mt-3" href="{% url 'log_list' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

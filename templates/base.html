@@ -11,7 +11,7 @@
 <nav class="navbar navbar-dark bg-success mb-4">
   <div class="container">
     <a class="navbar-brand" href="{% url 'dashboard' %}">Kisaju Poultry System</a>
-    <div class="d-flex align-items-center text-white">
+    <a class="nav-link text-white me-auto" href="{% url 'log_list' %}">Daily logs</a>    <div class="d-flex align-items-center text-white">
       <span class="me-3">{{ user.username }} · {{ user.get_role_display }}</span>
       <form method="post" action="{% url 'logout' %}" class="m-0">
         {% csrf_token %}
@@ -22,6 +22,9 @@
 </nav>
 {% endif %}
 <main class="container">
+    {% for m in messages %}
+    <div class="alert alert-success">{{ m }}</div>
+  {% endfor %}
   {% block content %}{% endblock %}
 </main>
 </body>

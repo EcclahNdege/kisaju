@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Daily logs</h3>
+  {% if can_record %}
+    <a class="btn btn-success" href="{% url 'log_create' %}">Add daily log</a>
+  {% endif %}
+</div>
+<div class="card">
+  <table class="table table-sm mb-0">
+    <thead>
+      <tr><th>Date</th><th>Farm</th><th>House</th><th>Flock</th><th>Deaths</th><th>Culls</th><th>Feed (kg)</th><th>Eggs</th></tr>
+    </thead>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.date }}</td>
+      <td>{{ log.flock.house.farm }}</td>
+      <td>{{ log.flock.house.name }}</td>
+      <td>{{ log.flock.code }}</td>
+      <td>{{ log.deaths }}</td>
+      <td>{{ log.culls }}</td>
+      <td>{{ log.feed_used_kg }}</td>
+      <td>{{ log.eggs_collected|default_if_none:"-" }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8" class="text-muted">No logs yet.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
