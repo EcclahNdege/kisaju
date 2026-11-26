@@ -2,6 +2,33 @@
 {% block content %}
 <h3 class="mb-3">Dashboard</h3>
 
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="card p-3">
+      <div class="text-muted">Birds alive</div>
+      <div class="fs-2 fw-semibold">{{ stats.live_birds }}</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card p-3">
+      <div class="text-muted">Losses today</div>
+      <div class="fs-2 fw-semibold">{{ stats.losses_today }}</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card p-3">
+      <div class="text-muted">Eggs today</div>
+      <div class="fs-2 fw-semibold">{{ stats.eggs_today }}</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card p-3">
+      <div class="text-muted">Feed used today (kg)</div>
+      <div class="fs-2 fw-semibold">{{ stats.feed_today }}</div>
+    </div>
+  </div>
+</div>
+
 {% for farm in farms %}
 <div class="card mb-3">
   <div class="card-header">
@@ -12,18 +39,23 @@
       <h6>{{ house.name }} <small class="text-muted">capacity {{ house.capacity }}</small></h6>
       <table class="table table-sm mb-3">
         <thead>
-          <tr><th>Flock</th><th>Breed</th><th>Started with</th><th>Arrived</th><th>Status</th></tr>
+          <tr>
+            <th>Flock</th><th>Breed</th><th>Started with</th>
+            <th>Alive now</th><th>Mortality %</th><th>Arrived</th><th>Status</th>
+          </tr>
         </thead>
         {% for flock in house.flocks.all %}
         <tr>
           <td>{{ flock.code }}</td>
           <td>{{ flock.breed }}</td>
           <td>{{ flock.initial_quantity }}</td>
+          <td>{{ flock.live_birds }}</td>
+          <td>{{ flock.mortality_rate }}</td>
           <td>{{ flock.arrival_date }}</td>
           <td>{{ flock.get_status_display }}</td>
         </tr>
         {% empty %}
-        <tr><td colspan="5" class="text-muted">No flocks in this house.</td></tr>
+        <tr><td colspan="7" class="text-muted">No flocks in this house.</td></tr>
         {% endfor %}
       </table>
     {% empty %}
