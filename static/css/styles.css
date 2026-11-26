@@ -1,0 +1,39 @@
+:root {
+  --brand: #2f5d3a;
+  --brand-dark: #234a2d;
+  --accent: #e8a317;
+  --accent-soft: #fff3d6;
+  --page-bg: #f6f4ee;
+}
+
+body {
+  background-color: var(--page-bg);
+}
+
+.app-nav {
+  background-color: var(--brand);
+}
+
+a {
+  color: var(--brand);
+}
+
+.btn-success {
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: var(--brand-dark);
+  --bs-btn-hover-border-color: var(--brand-dark);
+  --bs-btn-active-bg: var(--brand-dark);
+  --bs-btn-active-border-color: var(--brand-dark);
+}
+
+.card {
+  border: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  background-color: var(--accent-soft);
+  border-bottom: 2px solid var(--accent);
+  font-weight: 500;
+}
